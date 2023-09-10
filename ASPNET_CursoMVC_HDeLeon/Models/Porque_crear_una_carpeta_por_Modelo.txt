@@ -1,0 +1,3 @@
+﻿//V#4 Layout, Razor, Listas
+Es importante saber que para llevar un mejor control de los modelos se debe guardar en un sitio a parte,
+así como támbien para evitar que se mezclen o sobre escriban o se confundan las clases para cada tabla.

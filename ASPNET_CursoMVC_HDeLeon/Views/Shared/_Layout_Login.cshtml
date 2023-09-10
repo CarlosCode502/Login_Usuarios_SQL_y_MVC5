@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Iniciar sesión";
+}
+
+<!-- //V#4 Layout, Razor, Listas-->
+<!--El Layout es como la página o la vista principal es muy útil para la reutilización de código
+    para sitios que requieren mostrar las mismas partes -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>            
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.ToString("D") - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+    <!-- //V#4 Layout, Razor, Listas-->
+    <!--Aquí se cargan los Bundles-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <!--Importante los Render con (Jquery o Boostrap) deben ir antes del renderSection debido a que si este se carga antes
+        y requiere algún complemento ya sea de jquery o boostrap no se le cargaran debido a que ya se cargaron anteriormente-->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

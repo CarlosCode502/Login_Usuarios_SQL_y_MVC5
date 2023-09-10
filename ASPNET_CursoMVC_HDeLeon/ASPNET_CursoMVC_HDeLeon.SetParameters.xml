@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="asp-net-mvc-website" />
+  <setParameter name="BD_CursoMVC_HDeLeonEntities-Web.config Connection String" value="metadata=res://*/Models.DB_CursoMVC_HDL.csdl|res://*/Models.DB_CursoMVC_HDL.ssdl|res://*/Models.DB_CursoMVC_HDL.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=localhost;initial catalog=BD_CursoMVC_HDeLeon;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+</parameters>

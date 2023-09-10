@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    //Se agrega la referencia al Layout la ruta y el NOMBRE Y TERMINACIÓN EXACTA ".cshtml"
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+@*//V#1 Introducción a controladores y vistas HDL*@
+<div class="row">
+    <br />
+    <form id="frm">
+        <div class="col-lg-6 col-lg-offset-3">
+            <!--Estructura de formulario para entrar-->
+            Usuario:<input type="text" name="user" />
+            Contraseña:
+            <input type="password" name="password" />
+            <input type="submit" class="btn btn-success" value="Ingresar" />
+        </div>
+    </form>
+</div>
+
+@* AL MOMENTO DE TRABAJAR CON SCRIPTS SE DEBE REVISAR BIEN LOS ERRORES
+    INTELLISENSE NO TRABAJA MUY RAPIDO AQUI*@
+
+@section Scripts{
+    <script>
+    $(document).ready(function () {
+
+        //Selector de Jquery("frm)
+        $( "#frm" ).submit(function (e) {
+
+            //con ajax(no se donde va V;)
+            e.preventDefault();
+
+            //~para ir al archivo sin importar su ubicación
+            url = "@Url.Content("~/Acces/Ingresar")"
+            //el this es igual a #frm y serialize da los elementos para la peticion
+            parametros = $(this).serialize();
+
+            //Esta es una petición
+            $.post(url, parametros, function (data) {
+                //Evalua cuando data sea igual a "1" va a ser exitoso
+                if (data == "1") {
+                    //Si es correcto se va redirigir a una ruta especifica
+                    document.location.href = "@Url.Content("~/Home")";
+                     
+                }
+                else { //en caso de que no sea exitoso
+                    //el msje lo retorna el mismo método del controlador
+                    //ya que si no se retorna "1" por normativa es un error
+                    alert(data);
+                    
+                }
+            })
+        })
+    })
+
+    </script>
+}
+
+

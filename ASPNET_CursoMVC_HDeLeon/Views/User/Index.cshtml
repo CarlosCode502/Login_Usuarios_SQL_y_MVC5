@@ -1,0 +1,82 @@
+﻿@* //V#4 Layout, Razor, Listas
+    Especificamos el objeto que va a recibir nuestra vista
+    en este caso es un Modelo*@
+@model List<ASPNET_CursoMVC_HDeLeon.Models.TableViewModel.UserTableViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>USUARIOS REGISTRADOS</h2>
+
+@*@Html.ActionLink("Agregar Usuario", "Add", "User")*@
+<input type="button" class="btn btn-success" onclick="document.location.href='@Url.Content("~/User/Add")'" value="Nuevo usuario" />
+<br />
+<br />
+<!--NOTA: ESTA ESTRUCTURA NO ES SIMILAR AL UTILIZAR SCAFFOLDING, YA QUE ESTA VISTA RECIBE UN MODELO DE TIPO LISTA
+    Y AL MOMENTO DE UTILIZAR SCAFFOLDING SE RECIBE UN MODELO DE TIPO IENUMERABLE-->
+<div clr="row">
+    <div class="col-lg-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    @*<th>#</th>*@
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+
+            <!--Lanzaba un error "Object reference not set to an instance of an object.", esto debido a que
+                no le estaba mandando los datos al modelo es decir la lista "lst" en la Vista de esta manera
+                "return View(lst);"-->
+            @foreach (var oElemento in Model)
+            {
+                <tr>
+                    @*<td>@oElemento.Id</td>*@
+                    <td>@oElemento.Nombre</td>
+                    <td>@oElemento.Edad</td>
+                    <td>@oElemento.Email</td>
+                    <td>@oElemento.IdState</td>
+                    <td>
+                        <!--//V#6 Siguiendo crud Editar y Eliminar con Entity Framework-->
+                        <input type="button" onclick="document.location.href='@Url.Content("~/User/Edit/"+oElemento.Id)'" value="Editar" class="btn btn-info" />
+                         
+                        <!--Dentro de onclick se ejecuta una función de ajax-->
+                        <input onclick="jsDelete(@oElemento.Id);" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<!--//V#6 Siguiendo crud Editar y Eliminar con Entity Framework-->
+<script>
+    function jsDelete(id) {
+        //Se manda un mensaje de confirmación a través de js para luego ejecutar el código ajax
+        if (confirm("Seguro que desea eliminar este registro?")) {
+            //Aqui se recibe el Content("1") del controlador Delete
+            //Esto es ajax
+            url = "@Url.Content("~/User/Delete")" + "/" + id;
+
+            //Esta es una petición ajax por medio de "post" que recibe como parámetro una url y una variable
+            //(es una funcion en JS) pero en c# es como una variable "COOLBACK"
+            //data es un atributo que recibe la funcion
+            $.post(url, function (data){
+                if (data == "0") {
+                    //Se evalua que el valor recibido del controlador sea similar al de esta condición
+                    //si es afirmativo se va a eliminar el registro y redireccionar al usuario al index
+                    document.location.href = "@Url.Content("~/User/Index")"
+                }
+                else {
+                    //Si no se recibe dicho dato o es distinto va a mandar un error
+                    alert("Ha ocurrido un error :(")
+                }
+            })
+
+            HTMLSpanElement("Se elimino Correctamente")
+        }
+    }
+</script>

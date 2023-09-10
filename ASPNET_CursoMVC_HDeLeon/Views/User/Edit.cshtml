@@ -1,0 +1,73 @@
+﻿@* //V#5 IniciandoCrud Validaciones y agregar usuario con EF
+    Le mandamos el modelo correspondiente a Editar usuarios
+    
+    IMPORTANTE ESTA VISTA TIENE LO MISMO QUE LA VISTA AGREGAR USUARIOS *@
+@model ASPNET_CursoMVC_HDeLeon.Models.AddUserViewModel.Edit_UserViewModel
+
+@{
+    ViewBag.Title = "Editar Usuarios";
+}
+
+<h1>@ViewBag.Titlle</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <!--Formato html (tambien es posible hacerlo cmo etiquetas html)
+    Parametros dentro del beginForm (View, Controller, Metod(que maneja las solicitudes)) -->
+        @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+            //V#6 Siguiendo crud Editar y Eliminar con Entity Framework
+            @Html.HiddenFor(model => model.Id)
+            //
+
+            <!--Atributo de seguridad para verificar que las peticiones no se realicen desde afuera-->
+            @Html.AntiForgeryToken()
+            <!--Esto valida que cuando hay un error el texto se pone en color rojo
+        errores que vienen directo de los DataAnotations-->
+            @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+            <!--Poner los atributos del modelo en un componente de tipo Label con el nombre de una propiedad del modelo -->
+            <div>
+                @Html.LabelFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Edad)
+                @Html.TextBoxFor(model => model.Edad, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Edad, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Email)
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Password)
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.ConfirmarPassword)
+                @Html.PasswordFor(model => model.ConfirmarPassword, new { @class = "form-control" })
+                @* OTRA FORMA DE MOSTRAR MSJ DE ERROR (FUNCIONA IGUAL) *@
+                @Html.ValidationMessage("ConfirmarPassword", "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(model => model.IdState)
+                @Html.TextBoxFor(model => model.IdState, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdState, "", new { @class = "text-danger" })
+            </div>
+            <hr />
+            <!--Botón con html Puro-->
+            <div style="text-align:right;">
+                <input type="submit" class="btn-block btn-success" value="Actualizar" />
+            </div>
+        }
+    </div>
+</div>
+
+@*@section Scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
